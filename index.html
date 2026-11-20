@@ -1167,14 +1167,8 @@ const ISLANDS = [
 ];
 
 window.addBase = function (m) {
-  const carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains: 'abcd', maxZoom: 19, attribution: '&copy; OpenStreetMap contributors &copy; CARTO' }).addTo(m);
-  // Dự phòng: nếu Carto bị chặn/lỗi thì chuyển sang nền OpenStreetMap
-  let fell = false;
-  carto.on('tileerror', () => {
-    if (fell) return; fell = true; m.removeLayer(carto);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(m);
-  });
-  new NoLabelClip({ maxZoom: 19 }).addTo(m);
+  // Carto nay bắt buộc API key (hiện chữ "API KEY REQUIRED") nên dùng thẳng OpenStreetMap
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(m);
   seaLabels(m);
 };
 
